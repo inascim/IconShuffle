@@ -1,0 +1,36 @@
+type Player {
+    playerName: String!
+    playerScore: Int!
+    playerCards: [Int]!
+}
+
+type BasicGame {
+    _id: ID!
+    players: [Player]!
+    gameType: String!
+    cardsNumber: Int!
+    cardData: [Int]!
+    error: String
+}
+
+input UpdateBasicGameInput {
+    id: ID!
+    playerName: String
+    playerIcon: Int
+}
+
+input CreateBasicGameInput {
+    players: [String]!
+    gameType: String!
+}
+
+type Query {
+    games: [BasicGame!]!
+    game(id: ID!): BasicGame!
+}
+
+type Mutation {
+    createBasicGame(data: CreateBasicGameInput): BasicGame!
+    updateBasicGame(data: UpdateBasicGameInput): BasicGame
+    deleteBasicGame(id: ID!): Boolean
+}
