@@ -7,10 +7,12 @@ const PlayerSchema = new mongoose.Schema({
 });
 
 const BasicGame = new mongoose.Schema({
+  gameName: { type: String, required: true },
+  gameMode: { type: String, required: true },
+  gameDificulty: { type: String, required: true },
+  gameTotalCards: { type: Number, required: false, default: 10 },
+  gameCards: { type: [Number], required: true },
   players: [PlayerSchema],
-  gameType: { type: String, required: true },
-  cardsNumber: { type: Number, required: false, default: 10 },
-  cardData: { type: [Number], required: true },
 }, {
   collection: 'basicGames',
   timestamps: true,

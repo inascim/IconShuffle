@@ -6,10 +6,12 @@ type Player {
 
 type BasicGame {
     _id: ID!
+    gameName: String!
+    gameMode: String!
+    gameDificulty: String!
+    gameTotalCards: Int!
+    gameCards: [Int]!
     players: [Player]!
-    gameType: String!
-    cardsNumber: Int!
-    cardData: [Int]!
     error: String
 }
 
@@ -20,8 +22,10 @@ input UpdateBasicGameInput {
 }
 
 input CreateBasicGameInput {
+    gameName: String!
+    gameMode: String!
+    gameDificulty: String!
     players: [String]!
-    gameType: String!
 }
 
 type Query {

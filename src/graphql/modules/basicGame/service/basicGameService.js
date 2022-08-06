@@ -12,7 +12,7 @@ class BasicGameService {
     this.basicGameRepository = BasicGameRepository
   }
 
-  _updateBasicGamePlayers ({ players, cardData: newPlayerCardData, actionPlayerName }) {
+  _updateBasicGamePlayers ({ players, gameCards: newPlayerCardData, actionPlayerName }) {
     return players.map(
       ({ playerName, playerScore, playerCards }) => {
         if (actionPlayerName === playerName) {
@@ -27,11 +27,11 @@ class BasicGameService {
     );
   }
 
-  _buildTableCards({ players, cardData, actionPlayerName }) {
+  _buildTableCards({ players, gameCards, actionPlayerName }) {
     const playerCardsMatrix = players
-    .filter(({ playerName }) => playerName !== actionPlayerName)
-    .map(({playerCards}) => playerCards)
-    .concat([cardData]);
+      .filter(({ playerName }) => playerName !== actionPlayerName)
+      .map(({playerCards}) => playerCards)
+      .concat([gameCards]);
 
     const randomElementsFromPlayers = pickRandonItemFromList(playerCardsMatrix);
     return createRandomUniqueList({ 
@@ -41,7 +41,7 @@ class BasicGameService {
   }
 
   _verifyPlayerMove({ gameData = {}, playerIcon, playerName}) {
-    const { cardData = [], players = [] } = gameData;
+    const { gameCards = [], players = [] } = gameData;
     const playerGame = players.find(
       ({playerName: pName}) => pName === playerName
     );
@@ -52,15 +52,20 @@ class BasicGameService {
 
     const { playerCards: playerCardIcons = [] } = playerGame;
     const isIconInPlayerCard = [...playerCardIcons].includes(playerIcon);
-    const isIconInCardData = cardData.includes(playerIcon);
+    const isIconInGameCards = gameCards.includes(playerIcon);
 
-    return isIconInPlayerCard && isIconInCardData
+    return isIconInPlayerCard && isIconInGameCards
   }
 
-  async createBasicGame({ players = [], gameType }) {
+  async createBasicGame({ 
+    gameName, 
+    gameMode,
+    gameDificulty,
+    players = [],
+  }) {
     const playersData = players.map((pName) => ({
       playerName: pName,
-      playerCards: createRandomUniqueList({ size: 8 }) 
+      playerCards: createRandomUniqueList({ size: 8 })
     }));
 
     const playerCardsMatrix = playersData.map(({playerCards}) => playerCards);
@@ -71,9 +76,11 @@ class BasicGameService {
     });
 
     return this.basicGameRepository.createGame({
-      gameType,
+      gameName,
+      gameMode,
+      gameDificulty,
       players: playersData,
-      cardData: tableCards,
+      gameCards: tableCards,
     });
   }
 
@@ -97,7 +104,7 @@ class BasicGameService {
         id,
         data: {
           players: playersUpdate,
-          cardData: newTableCard,
+          gameCards: newTableCard,
         }
       }, { new: true });
     }
