@@ -50,7 +50,6 @@
   },
   "scripts": {
     "babel-node": "babel-node",
-    "build": "rimraf ./build",
     "start": "nodemon --exec npm run babel-node -- src/index.js -e json,gql",
     "debug": "nodemon --exec npm run babel-node -- src/index.js --inspect",
     "lint": "eslint \"src/**/*.js*\"",
