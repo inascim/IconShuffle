@@ -26,7 +26,7 @@ async function startServer({ typeDefs, resolvers }) {
   const server = new ApolloServer({ typeDefs, resolvers });
   const graphqlPort = 3000;
   server.setGraphQLPath('graphql');
-  server.listen(graphqlPort).then(({ url }) => {
+  server.listen(process.env.PORT || graphqlPort).then(({ url }) => {
     console.log(`🚀 Apollo server ready on ${url}`);
     console.log('⚡️ Playground exposed on /graphql');
   });
