@@ -67,7 +67,7 @@
   "scripts": {
     "clean": "rm -rf build",
     "build": "babel src/ --out-dir dist/ --copy-files",
-    "start:prod": "npm run clean && npm run build && node ./dist/index.js",
+    "start": "npm run clean && npm run build && node ./dist/index.js",
     "babel-node": "babel-node",
     "start:dev": "nodemon --exec npm run babel-node -- src/index.js -e json,gql",
     "debug": "nodemon --exec npm run babel-node -- src/index.js --inspect",
