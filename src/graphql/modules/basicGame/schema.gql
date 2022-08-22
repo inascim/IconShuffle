@@ -28,6 +28,11 @@ input CreateBasicGameInput {
     players: [String]!
 }
 
+input JoinBasicGameInput {
+    gameName: String!
+    playerName: String!
+}
+
 type Query {
     games: [BasicGame!]!
     game(id: ID!): BasicGame!
@@ -37,4 +42,11 @@ type Mutation {
     createBasicGame(data: CreateBasicGameInput): BasicGame!
     updateBasicGame(data: UpdateBasicGameInput): BasicGame
     deleteBasicGame(id: ID!): Boolean
+}
+
+type Subscription {
+    gamesSub: BasicGame!,
+    hello: String!
+    postCreated: String!
+    chatCreated: Int
 }
